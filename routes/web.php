@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InjectionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TraversalController;
-
+use App\Http\Controllers\SSRFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +43,5 @@ Route::post('fileUpload', [FileUploadController::class, 'fileUpload']);
 
 
 Route::get('traversal', [TraversalController::class, 'viewTraversal']);
+
+Route::get('ssrf', [SSRFController::class, 'index']);
