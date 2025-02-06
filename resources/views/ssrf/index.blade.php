@@ -6,7 +6,10 @@
         <input type="submit" value="Submit">
     </form>
     @if(isset($response))
-        
         <img src="{!! $response !!}" alt="">
+    @endif
+    @if(isset($error))
+        <p>{!! $error !!}</p>
+
     @endif
 @endsection

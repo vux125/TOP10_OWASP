@@ -21,10 +21,10 @@ class FileUploadController extends Controller
         }
         $filePath = $file->getRealPath();
         $fileContent = file_get_contents($filePath, false, null, 0, 8);
-        if (substr($fileContent, 0, 3) != "\xFF\xD8\xFF" || substr($fileContent, 0, 4) != "GIF8" || substr($fileContent, 0, 8) != "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A") {
+        if (substr($fileContent, 0, 3) != "\xFF\xD8\xFF" && substr($fileContent, 0, 4) != "GIF8" && substr($fileContent, 0, 8) != "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A") {
             return view('fileuploads.index', ['error' => 'Not a valid image file']);
         }
-        $filename = $file->getClientOriginalName() . time();
+        $filename = time() . $file->getClientOriginalName();
         $file->move('uploads', $filename);
         $url = url('uploads/' . $filename);
         return view('fileuploads.index', ['success' => 'File uploaded successfully', 'url' => $url]);

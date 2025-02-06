@@ -27,7 +27,63 @@ class InjectionController extends Controller
     public function osInjection(Request $req)
     {
         $domain = $req->input('os');
-        $ban = ['ls', 'cat', 'find', 'grep', 'tail', 'less', 'strings', 'curl', 'wget', 'nl', 'more', 'awk', 'tac', 'od', 'xxd', 'rm', '*', 'rmdir', '&', '|', '>', '<', '`', '&&', '||', '!', '(', ')', '{', '}', '[', ']', '$', '?', ':', '=', '+', '-', '_', '%', '#', '@', '!', '~', '^', '\\', '"', "'", ',', '.', '>', '<', ' ', '  '];
+        $ban = [
+            'ls',
+            'cat',
+            'find',
+            'grep',
+            'tail',
+            'less',
+            'strings',
+            'curl',
+            'wget',
+            'nl',
+            'more',
+            'awk',
+            'tac',
+            'od',
+            'xxd',
+            'rm',
+            '*',
+            'rmdir',
+            'tree',
+            '&',
+            '|',
+            '>',
+            '<',
+            '`',
+            '&&',
+            '||',
+            '!',
+            '(',
+            ')',
+            '{',
+            '}',
+            '[',
+            ']',
+            '$',
+            '?',
+            ':',
+            '=',
+            '+',
+            '-',
+            '_',
+            '%',
+            '#',
+            '@',
+            '!',
+            '~',
+            '^',
+            '\\',
+            '"',
+            "'",
+            ',',
+            '.',
+            '>',
+            '<',
+            ' ',
+            '  '
+        ];
         $check = explode(' ', $domain);
         foreach ($check as $c) {
             if (in_array($c, $ban)) {
@@ -50,11 +106,15 @@ class InjectionController extends Controller
     }
     public function sqlInjectionInBand()
     {
-        $id = $_GET['id'];
-        $sql = "SELECT * FROM products WHERE id = $id";
-        $res = Product::query()->fromQuery($sql);
-        $product = $res->first();
-        return view('injections.sql.detailProduct', compact('product'));
+        try {
+            $id = $_GET['id'];
+            $sql = "SELECT * FROM products WHERE id = $id";
+            $res = Product::query()->fromQuery($sql);
+            $product = $res->first();
+            return view('injections.sql.detailProduct', compact('product'));
+        } catch (\Exception $e) {
+            return view('injections.sql.detailProduct');
+        }
     }
 
     //Sql Injection Inferential(Boolean Based)
@@ -110,20 +170,6 @@ class InjectionController extends Controller
     {
         $comment = $req->input('content');
         $productId = $req->input('product_id');
-        // try {
-        //     $cmt = Comment::create([
-        //         'product_id' => $product,
-        //         'comment' => $comment,
-        //     ]);
-        //     return response()->json([
-        //         'success' => true,
-        //         'comment' => $cmt,
-        //     ]);
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         'success' => false,
-        //     ]);
-        // }
         $cmt = Comment::create([
             'product_id' => $productId,
             'content' => $comment,

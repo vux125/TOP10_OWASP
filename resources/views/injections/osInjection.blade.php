@@ -2,7 +2,7 @@
 @section('content')
     <form action="" method="post">
         @csrf
-        <input type="text" name="os" placeholder="os injection">
+        <input type="text" name="os" placeholder="domain">
         <input type="submit" >
     </form>
     @if (isset($res))

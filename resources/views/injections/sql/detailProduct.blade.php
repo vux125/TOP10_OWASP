@@ -32,6 +32,8 @@
                 </div>
             @endforeach
         </div>
+    @else
+        <h1>Product not found</h1>
     @endif
 </div>
 @endsection
